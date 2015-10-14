@@ -243,7 +243,7 @@ void __init of_core_init(void)
 		return;
 	}
 	for_each_of_allnodes(np)
-		__of_attach_node_sysfs(np);
+		__of_attach_node_post(np);
 	mutex_unlock(&of_mutex);
 
 	/* Symlink in /proc as required by userspace ABI */
