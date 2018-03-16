@@ -35,6 +35,20 @@ static int meson_efuse_read(void *context, unsigned int offset,
 	return 0;
 }
 
+static int meson_efuse_write(void *context, unsigned int offset,
+			     void *val, size_t bytes)
+{
+	u8 *buf = val;
+	int ret;
+
+	ret = meson_sm_call_write(buf, bytes, SM_EFUSE_WRITE, offset,
+				  bytes, 0, 0, 0);
+	if (ret < 0)
+		return ret;
+
+	return 0;
+}
+
 static const struct of_device_id meson_efuse_match[] = {
 	{ .compatible = "amlogic,meson-gxbb-efuse", },
 	{ /* sentinel */ },
@@ -59,8 +73,8 @@ static int meson_efuse_probe(struct platform_device *pdev)
 	econfig->name = dev_name(dev);
 	econfig->stride = 1;
 	econfig->word_size = 1;
-	econfig->read_only = true;
 	econfig->reg_read = meson_efuse_read;
+	econfig->reg_write = meson_efuse_write;
 	econfig->size = size;
 
 	nvmem = nvmem_register(econfig);
