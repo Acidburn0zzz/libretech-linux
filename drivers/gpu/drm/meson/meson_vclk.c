@@ -320,43 +320,32 @@ static void meson_venci_cvbs_clock_config(struct meson_drm *priv)
 				CTS_VDAC_EN, CTS_VDAC_EN);
 }
 
-enum {
+
 /* PLL	O1 O2 O3 VP DV     EN TX */
 /* 4320 /4 /4 /1 /5 /1  => /2 /2 */
-	MESON_VCLK_HDMI_ENCI_54000 = 1,
+#define MESON_VCLK_HDMI_ENCI_54000	1
 /* 4320 /4 /4 /1 /5 /1  => /1 /2 */
-	MESON_VCLK_HDMI_DDR_54000,
+#define MESON_VCLK_HDMI_DDR_54000	2
 /* 2970 /4 /1 /1 /5 /1  => /1 /2 */
-	MESON_VCLK_HDMI_DDR_148500,
+#define MESON_VCLK_HDMI_DDR_148500	3
 /* 4028 /4 /4 /1 /5 /2  => /1 /1 */
-	MESON_VCLK_HDMI_25175,
-/* 2560 /4 /2 /1 /5 /2  => /1 /1 */
-	MESON_VCLK_HDMI_32000,
-/* 2700 /4 /2 /1 /5 /2  => /1 /1 */
-	MESON_VCLK_HDMI_33750,
-/* 2712 /4 /2 /1 /5 /2  => /1 /1 */
-	MESON_VCLK_HDMI_33900,
-/* 2880 /4 /2 /1 /5 /2  => /1 /1 */
-	MESON_VCLK_HDMI_36000,
+#define MESON_VCLK_HDMI_25175		4
 /* 3200 /4 /2 /1 /5 /2  => /1 /1 */
-	MESON_VCLK_HDMI_40000,
+#define MESON_VCLK_HDMI_40000		5
 /* 5200 /4 /2 /1 /5 /2  => /1 /1 */
-	MESON_VCLK_HDMI_65000,
+#define MESON_VCLK_HDMI_65000		6
 /* 2970 /2 /2 /2 /5 /1  => /1 /1 */
-	MESON_VCLK_HDMI_74250,
-/* 3420 /4 /1 /1 /5 /2  => /1 /1 */
-	MESON_VCLK_HDMI_85500,
+#define MESON_VCLK_HDMI_74250		7
 /* 4320 /4 /1 /1 /5 /2  => /1 /1 */
-	MESON_VCLK_HDMI_108000,
+#define MESON_VCLK_HDMI_108000		8
 /* 2970 /1 /2 /2 /5 /1  => /1 /1 */
-	MESON_VCLK_HDMI_148500,
+#define MESON_VCLK_HDMI_148500		9
 /* 3240 /2 /1 /1 /5 /2  => /1 /1 */
-	MESON_VCLK_HDMI_162000,
+#define MESON_VCLK_HDMI_162000		10
 /* 2970 /1 /1 /1 /5 /2  => /1 /1 */
-	MESON_VCLK_HDMI_297000,
+#define MESON_VCLK_HDMI_297000		11
 /* 5940 /1 /1 /2 /5 /1  => /1 /1 */
-	MESON_VCLK_HDMI_594000
-};
+#define MESON_VCLK_HDMI_594000		12
 
 struct meson_vclk_params {
 	unsigned int pll_base_freq;
@@ -430,38 +419,6 @@ struct meson_vclk_params {
 		.vid_pll_div = VID_PLL_DIV_5,
 		.vclk_div = 2,
 	},
-	[MESON_VCLK_HDMI_32000] = {
-		.pll_base_freq = 2560000,
-		.pll_od1 = 4,
-		.pll_od2 = 2,
-		.pll_od3 = 1,
-		.vid_pll_div = VID_PLL_DIV_5,
-		.vclk_div = 2,
-	},
-	[MESON_VCLK_HDMI_33750] = {
-		.pll_base_freq = 2700000,
-		.pll_od1 = 4,
-		.pll_od2 = 2,
-		.pll_od3 = 1,
-		.vid_pll_div = VID_PLL_DIV_5,
-		.vclk_div = 2,
-	},
-	[MESON_VCLK_HDMI_33900] = {
-		.pll_base_freq = 2712000,
-		.pll_od1 = 4,
-		.pll_od2 = 2,
-		.pll_od3 = 1,
-		.vid_pll_div = VID_PLL_DIV_5,
-		.vclk_div = 2,
-	},
-	[MESON_VCLK_HDMI_36000] = {
-		.pll_base_freq = 2880000,
-		.pll_od1 = 4,
-		.pll_od2 = 2,
-		.pll_od3 = 1,
-		.vid_pll_div = VID_PLL_DIV_5,
-		.vclk_div = 2,
-	},
 	[MESON_VCLK_HDMI_40000] = {
 		.pll_base_freq = 3200000,
 		.pll_od1 = 4,
@@ -474,14 +431,6 @@ struct meson_vclk_params {
 		.pll_base_freq = 5200000,
 		.pll_od1 = 4,
 		.pll_od2 = 2,
-		.pll_od3 = 1,
-		.vid_pll_div = VID_PLL_DIV_5,
-		.vclk_div = 2,
-	},
-	[MESON_VCLK_HDMI_85500] = {
-		.pll_base_freq = 3420000,
-		.pll_od1 = 4,
-		.pll_od2 = 1,
 		.pll_od3 = 1,
 		.vid_pll_div = VID_PLL_DIV_5,
 		.vclk_div = 2,
@@ -531,86 +480,6 @@ void meson_hdmi_pll_set(struct meson_drm *priv,
 
 	if (meson_vpu_is_compatible(priv, "amlogic,meson-gxbb-vpu")) {
 		switch (base) {
-		case 2560000:
-			regmap_write(priv->hhi, HHI_HDMI_PLL_CNTL, 0x58000235);
-			regmap_write(priv->hhi, HHI_HDMI_PLL_CNTL2, 0x00000000);
-			regmap_write(priv->hhi, HHI_HDMI_PLL_CNTL3, 0x0d5c5091);
-			regmap_write(priv->hhi, HHI_HDMI_PLL_CNTL4, 0x801da72c);
-			regmap_write(priv->hhi, HHI_HDMI_PLL_CNTL5, 0x71486980);
-			regmap_write(priv->hhi, HHI_HDMI_PLL_CNTL6, 0x00000e55);
-
-			/* Enable and unreset */
-			regmap_update_bits(priv->hhi, HHI_HDMI_PLL_CNTL,
-						0x7 << 28, 0x4 << 28);
-
-			/* Poll for lock bit */
-			regmap_read_poll_timeout(priv->hhi, HHI_HDMI_PLL_CNTL,
-					val, (val & HDMI_PLL_LOCK), 10, 0);
-
-			/* div_frac */
-			regmap_update_bits(priv->hhi, HHI_HDMI_PLL_CNTL2,
-						0xFFFF,  0x4555);
-			break;
-
-		case 2700000:
-			regmap_write(priv->hhi, HHI_HDMI_PLL_CNTL, 0x58000238);
-			regmap_write(priv->hhi, HHI_HDMI_PLL_CNTL2, 0x00000000);
-			regmap_write(priv->hhi, HHI_HDMI_PLL_CNTL3, 0x0d5c5091);
-			regmap_write(priv->hhi, HHI_HDMI_PLL_CNTL4, 0x801da72c);
-			regmap_write(priv->hhi, HHI_HDMI_PLL_CNTL5, 0x71486980);
-			regmap_write(priv->hhi, HHI_HDMI_PLL_CNTL6, 0x00000e55);
-
-			/* Enable and unreset */
-			regmap_update_bits(priv->hhi, HHI_HDMI_PLL_CNTL,
-						0x7 << 28, 0x4 << 28);
-
-			/* Poll for lock bit */
-			regmap_read_poll_timeout(priv->hhi, HHI_HDMI_PLL_CNTL,
-					val, (val & HDMI_PLL_LOCK), 10, 0);
-
-			/* div_frac */
-			regmap_update_bits(priv->hhi, HHI_HDMI_PLL_CNTL2,
-						0xFFFF,  0x4400);
-			break;
-
-		case 2712000:
-			regmap_write(priv->hhi, HHI_HDMI_PLL_CNTL, 0x58000238);
-			regmap_write(priv->hhi, HHI_HDMI_PLL_CNTL2, 0x00000000);
-			regmap_write(priv->hhi, HHI_HDMI_PLL_CNTL3, 0x0d5c5091);
-			regmap_write(priv->hhi, HHI_HDMI_PLL_CNTL4, 0x801da72c);
-			regmap_write(priv->hhi, HHI_HDMI_PLL_CNTL5, 0x71486980);
-			regmap_write(priv->hhi, HHI_HDMI_PLL_CNTL6, 0x00000e55);
-
-			/* Enable and unreset */
-			regmap_update_bits(priv->hhi, HHI_HDMI_PLL_CNTL,
-						0x7 << 28, 0x4 << 28);
-
-			/* Poll for lock bit */
-			regmap_read_poll_timeout(priv->hhi, HHI_HDMI_PLL_CNTL,
-					val, (val & HDMI_PLL_LOCK), 10, 0);
-
-			/* div_frac */
-			regmap_update_bits(priv->hhi, HHI_HDMI_PLL_CNTL2,
-						0xFFFF,  0x4800);
-			break;
-
-		case 2880000:
-			regmap_write(priv->hhi, HHI_HDMI_PLL_CNTL, 0x5800023c);
-			regmap_write(priv->hhi, HHI_HDMI_PLL_CNTL2, 0x00000000);
-			regmap_write(priv->hhi, HHI_HDMI_PLL_CNTL3, 0x0d5c5091);
-			regmap_write(priv->hhi, HHI_HDMI_PLL_CNTL4, 0x801da72c);
-			regmap_write(priv->hhi, HHI_HDMI_PLL_CNTL5, 0x71486980);
-			regmap_write(priv->hhi, HHI_HDMI_PLL_CNTL6, 0x00000e55);
-
-			/* Enable and unreset */
-			regmap_update_bits(priv->hhi, HHI_HDMI_PLL_CNTL,
-						0x7 << 28, 0x4 << 28);
-
-			/* Poll for lock bit */
-			regmap_read_poll_timeout(priv->hhi, HHI_HDMI_PLL_CNTL,
-					val, (val & HDMI_PLL_LOCK), 10, 0);
-			break;
-
 		case 2970000:
 			regmap_write(priv->hhi, HHI_HDMI_PLL_CNTL, 0x5800023d);
 			regmap_write(priv->hhi, HHI_HDMI_PLL_CNTL2, 0x00000000);
@@ -672,27 +541,6 @@ void meson_hdmi_pll_set(struct meson_drm *priv,
 			/* div_frac */
 			regmap_update_bits(priv->hhi, HHI_HDMI_PLL_CNTL2,
 						0xFFFF,  0x4800);
-			break;
-
-		case 3420000:
-			regmap_write(priv->hhi, HHI_HDMI_PLL_CNTL, 0x58000247);
-			regmap_write(priv->hhi, HHI_HDMI_PLL_CNTL2, 0x00000000);
-			regmap_write(priv->hhi, HHI_HDMI_PLL_CNTL3, 0x0d5c5091);
-			regmap_write(priv->hhi, HHI_HDMI_PLL_CNTL4, 0x801da72c);
-			regmap_write(priv->hhi, HHI_HDMI_PLL_CNTL5, 0x71486980);
-			regmap_write(priv->hhi, HHI_HDMI_PLL_CNTL6, 0x00000e55);
-
-			/* unreset */
-			regmap_update_bits(priv->hhi, HHI_HDMI_PLL_CNTL,
-						BIT(28), 0);
-
-			/* Poll for lock bit */
-			regmap_read_poll_timeout(priv->hhi, HHI_HDMI_PLL_CNTL,
-					val, (val & HDMI_PLL_LOCK), 10, 0);
-
-			/* div_frac */
-			regmap_update_bits(priv->hhi, HHI_HDMI_PLL_CNTL2,
-						0xFFFF,  0x4400);
 			break;
 
 		case 3865000:
@@ -792,42 +640,6 @@ void meson_hdmi_pll_set(struct meson_drm *priv,
 	} else if (meson_vpu_is_compatible(priv, "amlogic,meson-gxm-vpu") ||
 		   meson_vpu_is_compatible(priv, "amlogic,meson-gxl-vpu")) {
 		switch (base) {
-		case 2560000:
-			regmap_write(priv->hhi, HHI_HDMI_PLL_CNTL, 0x4000026a);
-			regmap_write(priv->hhi, HHI_HDMI_PLL_CNTL2, 0x800cb2ab);
-			regmap_write(priv->hhi, HHI_HDMI_PLL_CNTL3, 0x860f30c4);
-			regmap_write(priv->hhi, HHI_HDMI_PLL_CNTL4, 0x0c8e0000);
-			regmap_write(priv->hhi, HHI_HDMI_PLL_CNTL5, 0x001fa729);
-			regmap_write(priv->hhi, HHI_HDMI_PLL_CNTL6, 0x01a31500);
-			break;
-
-		case 2700000:
-			regmap_write(priv->hhi, HHI_HDMI_PLL_CNTL, 0x40000270);
-			regmap_write(priv->hhi, HHI_HDMI_PLL_CNTL2, 0x800cb200);
-			regmap_write(priv->hhi, HHI_HDMI_PLL_CNTL3, 0x860f30c4);
-			regmap_write(priv->hhi, HHI_HDMI_PLL_CNTL4, 0x0c8e0000);
-			regmap_write(priv->hhi, HHI_HDMI_PLL_CNTL5, 0x001fa729);
-			regmap_write(priv->hhi, HHI_HDMI_PLL_CNTL6, 0x01a31500);
-			break;
-
-		case 2712000:
-			regmap_write(priv->hhi, HHI_HDMI_PLL_CNTL, 0x40000271);
-			regmap_write(priv->hhi, HHI_HDMI_PLL_CNTL2, 0x800cb000);
-			regmap_write(priv->hhi, HHI_HDMI_PLL_CNTL3, 0x860f30c4);
-			regmap_write(priv->hhi, HHI_HDMI_PLL_CNTL4, 0x0c8e0000);
-			regmap_write(priv->hhi, HHI_HDMI_PLL_CNTL5, 0x001fa729);
-			regmap_write(priv->hhi, HHI_HDMI_PLL_CNTL6, 0x01a31500);
-			break;
-
-		case 2880000:
-			regmap_write(priv->hhi, HHI_HDMI_PLL_CNTL, 0x40000278);
-			regmap_write(priv->hhi, HHI_HDMI_PLL_CNTL2, 0x800cb000);
-			regmap_write(priv->hhi, HHI_HDMI_PLL_CNTL3, 0x860f30c4);
-			regmap_write(priv->hhi, HHI_HDMI_PLL_CNTL4, 0x0c8e0000);
-			regmap_write(priv->hhi, HHI_HDMI_PLL_CNTL5, 0x001fa729);
-			regmap_write(priv->hhi, HHI_HDMI_PLL_CNTL6, 0x01a31500);
-			break;
-
 		case 2970000:
 			regmap_write(priv->hhi, HHI_HDMI_PLL_CNTL, 0x4000027b);
 			regmap_write(priv->hhi, HHI_HDMI_PLL_CNTL2, 0x800cb300);
@@ -849,15 +661,6 @@ void meson_hdmi_pll_set(struct meson_drm *priv,
 		case 3240000:
 			regmap_write(priv->hhi, HHI_HDMI_PLL_CNTL, 0x40000287);
 			regmap_write(priv->hhi, HHI_HDMI_PLL_CNTL2, 0x800cb000);
-			regmap_write(priv->hhi, HHI_HDMI_PLL_CNTL3, 0x860f30c4);
-			regmap_write(priv->hhi, HHI_HDMI_PLL_CNTL4, 0x0c8e0000);
-			regmap_write(priv->hhi, HHI_HDMI_PLL_CNTL5, 0x001fa729);
-			regmap_write(priv->hhi, HHI_HDMI_PLL_CNTL6, 0x01a31500);
-			break;
-
-		case 3420000:
-			regmap_write(priv->hhi, HHI_HDMI_PLL_CNTL, 0x4000028e);
-			regmap_write(priv->hhi, HHI_HDMI_PLL_CNTL2, 0x800cb200);
 			regmap_write(priv->hhi, HHI_HDMI_PLL_CNTL3, 0x860f30c4);
 			regmap_write(priv->hhi, HHI_HDMI_PLL_CNTL4, 0x0c8e0000);
 			regmap_write(priv->hhi, HHI_HDMI_PLL_CNTL5, 0x001fa729);
@@ -986,18 +789,6 @@ void meson_vclk_setup(struct meson_drm *priv, unsigned int target,
 	case 25175:
 		freq = MESON_VCLK_HDMI_25175;
 		break;
-	case 32000:
-		freq = MESON_VCLK_HDMI_32000;
-		break;
-	case 33750:
-		freq = MESON_VCLK_HDMI_33750;
-		break;
-	case 33900:
-		freq = MESON_VCLK_HDMI_33900;
-		break;
-	case 36000:
-		freq = MESON_VCLK_HDMI_36000;
-		break;
 	case 40000:
 		freq = MESON_VCLK_HDMI_40000;
 		break;
@@ -1006,9 +797,6 @@ void meson_vclk_setup(struct meson_drm *priv, unsigned int target,
 		break;
 	case 74250:
 		freq = MESON_VCLK_HDMI_74250;
-		break;
-	case 85500:
-		freq = MESON_VCLK_HDMI_85500;
 		break;
 	case 108000:
 		freq = MESON_VCLK_HDMI_108000;

@@ -545,7 +545,6 @@ dw_hdmi_mode_valid(struct drm_connector *connector,
 	unsigned int venc_freq;
 	unsigned int hdmi_freq;
 	int vic = drm_match_cea_mode(mode);
-	enum drm_mode_status status;
 
 	DRM_DEBUG_DRIVER("Modeline %d:\"%s\" %d %d %d %d %d %d %d %d %d %d 0x%x 0x%x\n",
 		mode->base.id, mode->name, mode->vrefresh, mode->clock,
@@ -556,9 +555,8 @@ dw_hdmi_mode_valid(struct drm_connector *connector,
 
 	/* Check against non-VIC supported modes */
 	if (!vic) {
-		status = meson_venc_hdmi_supported_mode(mode);
-		if (status != MODE_OK)
-			return status;
+		if (!meson_venc_hdmi_supported_mode(mode))
+			return MODE_BAD;
 	/* Check against supported VIC modes */
 	} else if (!meson_venc_hdmi_supported_vic(vic))
 		return MODE_BAD;
@@ -588,11 +586,6 @@ dw_hdmi_mode_valid(struct drm_connector *connector,
 	switch (vclk_freq) {
 	case 25175:
 	case 40000:
-	case 32000:
-	case 36000:
-	case 33750:
-	case 33900:
-	case 85500:
 	case 54000:
 	case 65000:
 	case 74250:
