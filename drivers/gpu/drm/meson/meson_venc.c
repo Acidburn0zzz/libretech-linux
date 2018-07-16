@@ -697,55 +697,6 @@ union meson_hdmi_venc_mode meson_hdmi_encp_mode_1080p60 = {
 	},
 };
 
-struct meson_hdmi_venc_dmt_mode {
-	struct drm_display_mode drm_mode;
-	union meson_hdmi_venc_mode *mode;
-} meson_hdmi_venc_dmt_modes[] = {
-	/* 640x480@60Hz */
-	{
-		{ DRM_MODE("640x480", DRM_MODE_TYPE_DRIVER, 25175, 640, 656,
-		  752, 800, 0, 480, 490, 492, 525, 0,
-		  DRM_MODE_FLAG_NHSYNC | DRM_MODE_FLAG_NVSYNC) },
-	},
-	/* 800x600@60Hz */
-	{
-		{ DRM_MODE("800x600", DRM_MODE_TYPE_DRIVER, 40000, 800, 840,
-		  968, 1056, 0, 600, 601, 605, 628, 0,
-		  DRM_MODE_FLAG_PHSYNC | DRM_MODE_FLAG_PVSYNC) },
-	},
-	/* 1024x768@60Hz */
-	{
-		{ DRM_MODE("1024x768", DRM_MODE_TYPE_DRIVER, 65000, 1024,
-		  1048, 1184, 1344, 0, 768, 771, 777, 806, 0,
-		  DRM_MODE_FLAG_NHSYNC | DRM_MODE_FLAG_NVSYNC) },
-	},
-	/* 1152x864@75Hz */
-	{
-		{ DRM_MODE("1152x864", DRM_MODE_TYPE_DRIVER, 108000, 1152,
-		  1216, 1344, 1600, 0, 864, 865, 868, 900, 0,
-		  DRM_MODE_FLAG_PHSYNC | DRM_MODE_FLAG_PVSYNC) },
-	},
-	/* 1280x1024@60Hz */
-	{
-		{ DRM_MODE("1280x1024", DRM_MODE_TYPE_DRIVER, 108000, 1280,
-		  1328, 1440, 1688, 0, 1024, 1025, 1028, 1066, 0,
-		  DRM_MODE_FLAG_PHSYNC | DRM_MODE_FLAG_PVSYNC) },
-	},
-	/* 1600x1200@60Hz */
-	{
-		{ DRM_MODE("1600x1200", DRM_MODE_TYPE_DRIVER, 162000, 1600,
-		  1664, 1856, 2160, 0, 1200, 1201, 1204, 1250, 0,
-		  DRM_MODE_FLAG_PHSYNC | DRM_MODE_FLAG_PVSYNC) },
-	},
-	/* 1920x1080@60Hz */
-	{
-		{ DRM_MODE("1920x1080", DRM_MODE_TYPE_DRIVER, 148500, 1920,
-		  2008, 2052, 2200, 0, 1080, 1084, 1089, 1125, 0,
-		  DRM_MODE_FLAG_NHSYNC | DRM_MODE_FLAG_NVSYNC) },
-	},
-	{ }, /* sentinel */
-};
-
 struct meson_hdmi_venc_vic_mode {
 	unsigned int vic;
 	union meson_hdmi_venc_mode *mode;
@@ -911,8 +862,7 @@ void meson_venc_hdmi_mode_set(struct meson_drm *priv, int vic,
 				DRM_MODE_ARG(mode));
 			return;
 		}
-	}
-	else {
+	} else {
 		meson_venc_hdmi_get_dmt_vmode(mode, &vmode_dmt);
 		vmode = &vmode_dmt;
 	}
