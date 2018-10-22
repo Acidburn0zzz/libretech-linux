@@ -55,8 +55,8 @@ int __of_add_property_sysfs(struct device_node *np, struct property *pp);
 void __of_remove_property_sysfs(struct device_node *np, struct property *prop);
 void __of_update_property_sysfs(struct device_node *np, struct property *newprop,
 		struct property *oldprop);
-int __of_attach_node_sysfs(struct device_node *np);
-void __of_detach_node_sysfs(struct device_node *np);
+int __of_attach_node_post(struct device_node *np);
+void __of_detach_node_post(struct device_node *np);
 #else
 static inline int __of_add_property_sysfs(struct device_node *np, struct property *pp)
 {
@@ -65,11 +65,11 @@ static inline int __of_add_property_sysfs(struct device_node *np, struct propert
 static inline void __of_remove_property_sysfs(struct device_node *np, struct property *prop) {}
 static inline void __of_update_property_sysfs(struct device_node *np,
 		struct property *newprop, struct property *oldprop) {}
-static inline int __of_attach_node_sysfs(struct device_node *np)
+static inline int __of_attach_node_post(struct device_node *np)
 {
 	return 0;
 }
-static inline void __of_detach_node_sysfs(struct device_node *np) {}
+static inline void __of_detach_node_post(struct device_node *np) {}
 #endif
 
 #if defined(CONFIG_OF_RESOLVE)
@@ -127,9 +127,9 @@ extern int __of_update_property(struct device_node *np,
 extern void __of_update_property_sysfs(struct device_node *np,
 		struct property *newprop, struct property *oldprop);
 
-extern int __of_attach_node_sysfs(struct device_node *np);
+extern int __of_attach_node_post(struct device_node *np);
 extern void __of_detach_node(struct device_node *np);
-extern void __of_detach_node_sysfs(struct device_node *np);
+extern void __of_detach_node_post(struct device_node *np);
 
 extern void __of_sysfs_remove_bin_file(struct device_node *np,
 				       struct property *prop);
@@ -145,5 +145,14 @@ extern void __of_sysfs_remove_bin_file(struct device_node *np,
 /* reverse iterator */
 #define for_each_transaction_entry_reverse(_oft, _te) \
 	list_for_each_entry_reverse(_te, &(_oft)->te_list, node)
+
+#if defined(CONFIG_OF_OVERLAY)
+extern int of_overlay_init(void);
+#else
+static inline int of_overlay_init(void)
+{
+	return 0;
+}
+#endif
 
 #endif /* _LINUX_OF_PRIVATE_H */
