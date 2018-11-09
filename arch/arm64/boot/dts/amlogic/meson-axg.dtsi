@@ -562,9 +562,6 @@
 					mux {
 						groups = "BOOT_8";
 						function = "gpio_periphs";
-					};
-					cfg-pull-down {
-						pins = "BOOT_8";
 						bias-pull-down;
 					};
 				};
@@ -585,9 +582,6 @@
 					mux {
 						groups = "GPIOX_4";
 						function = "gpio_periphs";
-					};
-					cfg-pull-down {
-						pins = "GPIOX_4";
 						bias-pull-down;
 					};
 				};
