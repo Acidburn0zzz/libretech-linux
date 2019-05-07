@@ -151,11 +151,13 @@
 		regulator-max-microvolt = <1800000>;
 	};
 
+	/* This is provided by LDOs on the eMMC daugther card */
 	vddio_boot: regulator-vddio_boot {
 		compatible = "regulator-fixed";
 		regulator-name = "VDDIO_BOOT";
 		regulator-min-microvolt = <1800000>;
 		regulator-max-microvolt = <1800000>;
+		vin-supply = <&vcc_3v3>;
 	};
 };
 
