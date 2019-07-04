@@ -589,6 +589,21 @@ dw_hdmi_mode_valid(struct drm_connector *connector,
 		mode->vdisplay, mode->vsync_start,
 		mode->vsync_end, mode->vtotal, mode->type, mode->flags);
 
+	/* Check against soc revision/package limits */
+	if (priv->limits) {
+		if (priv->limits->max_pixel_freq &&
+		    mode->clock > priv->limits->max_pixel_freq)
+			return MODE_CLOCK_HIGH;
+
+		if (priv->limits->max_width &&
+		    mode->hdisplay > priv->limits->max_width)
+			return MODE_BAD_HVALUE;
+
+		if (priv->limits->max_height &&
+		    mode->vdisplay > priv->limits->max_height)
+			return MODE_BAD_VVALUE;
+	}
+
 	/* If sink does not support 540MHz, reject the non-420 HDMI2 modes */
 	if (mode->clock > 340000 &&
 	    connector->display_info.max_tmds_clock < 340000 &&
