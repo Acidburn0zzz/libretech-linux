@@ -25,6 +25,12 @@
 #include <linux/soc/amlogic/meson-canvas.h>
 #include <drm/drmP.h>
 
+struct meson_drm_soc_limits {
+	unsigned int max_pixel_freq;
+	unsigned int max_width;
+	unsigned int max_height;
+};
+
 struct meson_drm {
 	struct device *dev;
 	void __iomem *io_base;
@@ -43,6 +49,8 @@ struct meson_drm {
 	struct drm_fbdev_cma *fbdev;
 	struct drm_plane *primary_plane;
 	struct drm_plane *overlay_plane;
+
+	const struct meson_drm_soc_limits *limits;
 
 	/* Components Data */
 	struct {
