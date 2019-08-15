@@ -56,16 +56,16 @@
 		compatible = "gpio-leds";
 
 		system {
-			label = "librecomputer:system-status";
+			label = "librecomputer:green:disk";
 			gpios = <&gpio GPIODV_24 GPIO_ACTIVE_HIGH>;
-			default-state = "on";
+			linux,default-trigger = "heartbeat";
 			panic-indicator;
 		};
 
 		blue {
-			label = "librecomputer:blue";
+			label = "librecomputer:blue:cpu";
 			gpios = <&gpio_ao GPIOAO_2 GPIO_ACTIVE_HIGH>;
-			linux,default-trigger = "heartbeat";
+			linux,default-trigger = "activity";
 		};
 	};
 
@@ -297,7 +297,6 @@
 
 	bus-width = <4>;
 	cap-sd-highspeed;
-	sd-uhs-sdr50;
 	max-frequency = <100000000>;
 	disable-wp;
 
